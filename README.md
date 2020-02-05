@@ -27,6 +27,10 @@ To run this app you have to have installed JDK or JRE 8 or higher:
 
     target/mouse-mover.exe
 
+Or:
+
+    java -jar target/mouse-mover.jar
+
 To run app with logging just put path to [debug.properties](log/debug.properties) file
 to `java.util.logging.config.file` Java system variable, e.g:
 
