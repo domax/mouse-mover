@@ -14,14 +14,43 @@
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <linkXRef>false</linkXRef>
+    <product.version>1.0.0.0</product.version>
   </properties>
 
+  <dependencies>
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.10</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>net.sourceforge.argparse4j</groupId>
+      <artifactId>argparse4j</artifactId>
+      <version>0.8.1</version>
+    </dependency>
+
+  </dependencies>
+
   <build>
+
     <pluginManagement>
       <plugins>
         <plugin>
           <artifactId>maven-assembly-plugin</artifactId>
           <version>3.2.0</version>
+        </plugin>
+        <plugin>
+          <groupId>com.akathist.maven.plugins.launch4j</groupId>
+          <artifactId>launch4j-maven-plugin</artifactId>
+          <version>1.7.25</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-shade-plugin</artifactId>
+          <version>3.2.1</version>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -36,6 +65,26 @@
           <execution>
             <goals>
               <goal>format</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>com.cosium.code</groupId>
+        <artifactId>maven-git-code-format</artifactId>
+        <version>1.20</version>
+        <executions>
+          <execution>
+            <id>install-formatter-hook</id>
+            <goals>
+              <goal>install-hooks</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>validate-code-format</id>
+            <goals>
+              <goal>validate-code-format</goal>
             </goals>
           </execution>
         </executions>
@@ -58,24 +107,62 @@
 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-assembly-plugin</artifactId>
+        <artifactId>maven-shade-plugin</artifactId>
         <executions>
           <execution>
             <phase>package</phase>
             <goals>
-              <goal>single</goal>
+              <goal>shade</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <shadedArtifactAttached>true</shadedArtifactAttached>
+          <shadedClassifierName>shaded</shadedClassifierName>
+          <finalName>${project.artifactId}</finalName>
+          <transformers>
+            <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+              <mainClass>com.domax.MouseMover</mainClass>
+            </transformer>
+          </transformers>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>com.akathist.maven.plugins.launch4j</groupId>
+        <artifactId>launch4j-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>l4j-clui</id>
+            <phase>package</phase>
+            <goals>
+              <goal>launch4j</goal>
             </goals>
             <configuration>
-              <finalName>${project.artifactId}</finalName>
-              <appendAssemblyId>false</appendAssemblyId>
-              <archive>
-                <manifest>
-                  <mainClass>com.domax.MouseMover</mainClass>
-                </manifest>
-              </archive>
-              <descriptorRefs>
-                <descriptorRef>jar-with-dependencies</descriptorRef>
-              </descriptorRefs>
+              <headerType>console</headerType>
+              <jar>${project.build.directory}/${project.artifactId}.jar</jar>
+              <outfile>${project.build.directory}/${project.artifactId}.exe</outfile>
+              <classPath>
+                <mainClass>com.domax.MouseMover</mainClass>
+                <addDependencies>true</addDependencies>
+                <preCp>anything</preCp>
+              </classPath>
+              <jre>
+                <minVersion>${java.version}.0</minVersion>
+                <jdkPreference>preferJre</jdkPreference>
+              </jre>
+              <icon>application.ico</icon>
+              <versionInfo>
+                <fileVersion>${product.version}</fileVersion>
+                <txtFileVersion>${project.version}</txtFileVersion>
+                <fileDescription>${project.name}</fileDescription>
+                <copyright>MIT</copyright>
+                <productVersion>${product.version}</productVersion>
+                <txtProductVersion>${product.version}</txtProductVersion>
+                <productName>${project.name}</productName>
+                <originalFilename>${project.artifactId}.exe</originalFilename>
+                <internalName>${project.artifactId}</internalName>
+              </versionInfo>
             </configuration>
           </execution>
         </executions>
