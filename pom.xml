@@ -39,10 +39,6 @@
     <pluginManagement>
       <plugins>
         <plugin>
-          <artifactId>maven-assembly-plugin</artifactId>
-          <version>3.2.0</version>
-        </plugin>
-        <plugin>
           <groupId>com.akathist.maven.plugins.launch4j</groupId>
           <artifactId>launch4j-maven-plugin</artifactId>
           <version>1.7.25</version>
@@ -93,7 +89,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-pmd-plugin</artifactId>
-        <version>3.11.0</version>
+        <version>3.12.0</version>
         <executions>
           <execution>
             <goals>
