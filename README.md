@@ -7,8 +7,8 @@ This movement activity is suppressed for some time (30 seconds by default) if us
 
 Multi-screen configuration is supported.
 
-By default, mouse is moving to the right direction by 5 pixels. 
-In case if cursor reaches edge of current screen then this motion changes direction. 
+By default, mouse is moving to the right direction by 5 pixels.
+After each movement direction is changed to opposite. 
 
 You may change default setting using command line arguments.
 To get help about supported arguments, run application with `-h` option.
@@ -26,6 +26,10 @@ Run
 To run this app you have to have installed JDK or JRE 8 or higher:
 
     target/mouse-mover.exe
+
+Or:
+
+    java -jar target/mouse-mover.jar
 
 To run app with logging just put path to [debug.properties](log/debug.properties) file
 to `java.util.logging.config.file` Java system variable, e.g:
