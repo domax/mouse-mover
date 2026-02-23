@@ -40,5 +40,6 @@ to `java.util.logging.config.file` Java system variable, e.g:
 Support
 -------
 
-If you want to support me: <br>
-[![Buy me a coffee](./buy_me_a_coffee.png)](https://www.paypal.me/domax/3)
+If you want to support me:
+
+[![Buy me a coffee](https://img.buymeacoffee.com/button-api/?text=Buy+me+a+coffee&emoji=&slug=domax&button_colour=F9A154&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=FFFFFF)](https://www.buymeacoffee.com/domax)
